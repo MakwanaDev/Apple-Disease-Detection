@@ -1,0 +1,8 @@
+model_config_list {
+  config {
+    name: 'Apple_model'
+    base_path: '/Apple Leaf Diseases/models'
+    model_platform: 'tensorflow'
+    model_version_policy: {all: {}}
+  }
+}
