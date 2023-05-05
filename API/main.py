@@ -1,3 +1,5 @@
+# Simple FastAPI app to use only one model at a time. Without TF Serving.
+
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
@@ -21,15 +23,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-MODEL = tf.keras.models.load_model("../Models/Model_1/")
+MODEL = tf.keras.models.load_model("../models/1")
 
 CLASS_NAMES = ['Healthy' , 'Multiple' , 'Rust' , 'Scab']
 
+
+# To check if our server is runnig fine
 
 @app.get("/ping")
 async def ping():
     return "Hello, I am alive"
 
+
+# To convert Bytes data recieved from request to numpy array
 
 def read_file_as_image(data) -> np.ndarray:
 
@@ -37,6 +43,8 @@ def read_file_as_image(data) -> np.ndarray:
     image = cv2.resize(image, (256, 256))
     return image
 
+
+# Final predict function to predict the disease class
 
 @app.post("/predict")
 async def predict(
@@ -54,6 +62,7 @@ async def predict(
         'confidence': float(confidence)
     }
 
+# Run the app on specified host and port
 
 if __name__ == "__main__":
     uvicorn.run(app, host='localhost', port=8000)
