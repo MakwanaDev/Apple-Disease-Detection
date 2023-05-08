@@ -9,7 +9,7 @@ import cv2
 import requests
 
 app = FastAPI()
-endpoint = "http://localhost:8502/v1/models/Apple_model:predict"
+endpoint = "http://localhost:8501/v1/models/Apple_model:predict"
 
 
 origins = [
